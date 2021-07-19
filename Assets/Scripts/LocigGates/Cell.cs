@@ -26,4 +26,9 @@ public class Cell
 
         return objectOnCell;
     }
+
+    public GameObject getGameObject()
+    {
+        return objectOnCell;
+    }
 }
