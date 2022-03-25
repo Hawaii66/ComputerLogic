@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Lamp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Sprite activeSprite;
+    public Sprite inActiveSprite;
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeState(bool newState)
     {
-        
+        if (newState)
+        {
+            GetComponent<SpriteRenderer>().sprite = activeSprite;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = inActiveSprite;
+        }
     }
 }

@@ -7,6 +7,10 @@ public class BoardManager : MonoBehaviour
     public List<Board> boards;
 
     public static BoardManager bm;
+    public Board currentBoard;
+
+    public Vector2Int DEBUG_gridPos;
+    public bool DEBUG_newState;
 
     private void Awake()
     {
@@ -28,11 +32,18 @@ public class BoardManager : MonoBehaviour
     public void AddBoard(Board newBoard)
     {
         boards.Add(newBoard);
+
+        currentBoard = newBoard;
     }
 
     public void RemoveBoard(Board removeBoard)
     {
         boards.Remove(removeBoard);
+    }
+
+    public Board GetCurrentBoard()
+    {
+        return currentBoard;
     }
 
 }

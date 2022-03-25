@@ -7,22 +7,39 @@ public class Cell
     private string boardID;
     Board currentBoard;
     private Vector2Int gridPosition;
+    private Vector2Int worldPos;
     private GameObject objectOnCell;
 
-    public Cell(string id, Vector2Int pos)
+    private bool powered;
+
+    public Cell(string id, Vector2Int pos, Vector2Int worldP)
     {
         boardID = id;
         currentBoard = BoardManager.bm.GetBoardById(boardID);
 
         gridPosition = pos;
+        worldPos = worldP;
         objectOnCell = null;
+
+        UpdateSprite();
     }
 
     public GameObject setObject(GameObject newObj)
     {
-        objectOnCell = newObj;
+        if (newObj)
+        {
+
+            objectOnCell = newObj;
+            objectOnCell.transform.position = new Vector3Int(worldPos.x, worldPos.y, -5);
+            objectOnCell.transform.SetParent(currentBoard.transform);
+        }
+        else
+        {
+            objectOnCell = null;
+        }
 
         currentBoard.RedrawBoard();
+        //UpdateSprite();
 
         return objectOnCell;
     }
@@ -30,5 +47,25 @@ public class Cell
     public GameObject getGameObject()
     {
         return objectOnCell;
+    }
+
+    public void UpdateActive(bool newState)
+    {
+        powered = newState;
+        UpdateSprite();
+    }
+
+    public bool isActive()
+    {
+        return powered;
+    }
+
+    public void UpdateSprite()
+    {
+        if(objectOnCell == null) { return; }
+        if(objectOnCell.GetComponent<Lamp>())
+        {
+            objectOnCell.GetComponent<Lamp>().ChangeState(powered);
+        }
     }
 }
